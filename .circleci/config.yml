@@ -5,13 +5,19 @@ defaults: &defaults
   docker:
     - image: docker:17.05.0-ce-git
 
-# aliases:
-#   - &common-test:
-#     steps:
-#       - checkout
-#       - setup_remote_docker
-#       - run: docker build -t app -f DockerFile.dev .
-#       - run: docker run app npm run test:ci
+aliases:
+  - &common-test:
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+        name: Build Docker image
+        command: |
+          docker build -t app -f DockerFile.dev .
+      - run:
+        name: Run Tests
+        command: |
+          docker run app npm run test:ci
 
 jobs:
   test:
