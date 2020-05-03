@@ -1,17 +1,18 @@
 version: 2.1
 
-defaults: &defaults
-  working_directory: /app
-  docker:
-    - image: docker:17.05.0-ce-git
+# defaults: &defaults
+#   working_directory: /app
+#   docker:
+#     - image: docker:17.05.0-ce-git
 
-aliases:
-  - &common-test:
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run: docker build -t app -f DockerFile.dev .
-      - run: docker run app npm run test:ci
+# aliases:
+#   - &common-test:
+#     steps:
+#       - checkout
+#       - setup_remote_docker
+#       - run: docker build -t app -f DockerFile.dev .
+#       - run: docker run app npm run test:ci
+
 
 jobs:
   test:
