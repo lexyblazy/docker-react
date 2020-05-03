@@ -5,7 +5,6 @@ defaults: &defaults
   docker:
     - image: docker:17.05.0-ce-git
 
-
 aliases:
   - &common-test:
     steps:
@@ -14,10 +13,16 @@ aliases:
       - run: docker build -t app -f DockerFile.dev .
       - run: docker run app npm run test:ci
 
-
 jobs:
   test:
-    <<: [*defaults, *common-test]
+    working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: docker build -t app -f DockerFile.dev .
+      - run: docker run app npm run test:ci
 
 workflows:
   version: 2
