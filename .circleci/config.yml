@@ -23,9 +23,9 @@ aliases:
 
 jobs:
   test:
-    <<: *defaults
-    environment:
-      CONFIG_ENV: development
+    working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
     <<: *common-test
 
 workflows:
