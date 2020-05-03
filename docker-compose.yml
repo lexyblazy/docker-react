@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: DockerFile.dev
+    ports:
+      - "5000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+    entrypoint: sh entrypoint.sh
+
+  tests:
+    build:
+      context: .
+      dockerfile: DockerFile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
