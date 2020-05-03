@@ -24,6 +24,8 @@ aliases:
 jobs:
   test:
     <<: *defaults
+    environment:
+      CONFIG_ENV: development
     <<: *common-test
 
 workflows:
