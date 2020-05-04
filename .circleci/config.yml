@@ -1,17 +1,35 @@
 version: 2.1
-orbs:
-  node: circleci/node@1.1.6
+
+defaults: &defaults
+  working_directory: /app
+  docker:
+    - image: docker:17.05.0-ce-git
+
+common-test: &common-test
+  steps:
+    - checkout
+    - setup_remote_docker
+    - run: docker build -t app -f DockerFile.dev .
+    - run: docker run app npm run test:ci
+
+common-deploy: &common-deploy
+  steps:
+    # - checkout
+    - run: echo "We will soon be deploying"
+
 jobs:
-  build-and-test:
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
+  test:
+    <<: *defaults
+    <<: *common-test
+  deploy:
+    <<: *defaults
+    <<: *common-deploy
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+  version: 2
+  main:
+    jobs:
+      - test
+      - deploy:
+          filters:
+            branches:
+              only: master
