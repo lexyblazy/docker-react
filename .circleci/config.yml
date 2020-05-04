@@ -22,6 +22,7 @@ jobs:
     <<: *defaults
     <<: *common-test
   deploy:
+    <<: *defaults
     <<: *common-deploy
 workflows:
   version: 2
