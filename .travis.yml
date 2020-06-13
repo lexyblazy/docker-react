@@ -7,4 +7,4 @@ before_install:
     - docker build -t lexyblazy/docker-react -f DockerFile.dev .
 
 scripts:
-    - docker run lexyblazy/docker-react npm run test -- --coverage
+    - docker run lexyblazy/docker-react npm run test:ci
